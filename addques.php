@@ -65,14 +65,14 @@
                     <textarea type="text" class="form-control" rows="5" placeholder="Type your Question"></textarea>
                 </div>
                 <label><h4>Options</h4></label>
-                <div class="container1 form-group">
-                    <div>
+                <div class=" form-group">
+                    <div class="container1"></div>
                     <button class="add_form_field delete_me btn btn-black mt-2">Add New Field &nbsp; 
                         <span style="font-size:16px; font-weight:bold;">+ </span>
                     </button>
                     <input class="ml-3 mul_ans" type="radio" name="type" value="checkbox" />Multiple Answers?
                     <input class="ml-3 sin_ans" type="radio" name="type" value="radio" />Single Answers?
-                    </div>
+                    
                 </div>
                 <button type="submit" name="submit" id="submit" value="submit" class="btn btn-black">Done</button>
             </form>
@@ -94,12 +94,12 @@
         $(mul_ans).click(function(e) {
             e.preventDefault();
             z = "checkbox"
-            $(wrapper).prepend('<div class=""><input type="text" name="mytext[]" class="form-control mb-1" placeholder="Fill me"/><input class="mb-5" type="'+z+'" name="answer[]" value="'+x+'" />Correct Answer</div>');
+            $(wrapper).append('<div class=""><input type="text" name="mytext[]" class="form-control mb-1" placeholder="Fill me"/><input class="mb-5" type="'+z+'" name="answer[]" value="'+x+'" />Correct Answer</div>');
             $(add_button).click(function(e) {
                 e.preventDefault();
                 if (x < max_fields) {
                     x++;
-                    $(wrapper).prepend('<div class=""><input type="text" name="mytext[]" class="form-control mb-1" placeholder="Fill me"/><input class="mb-5" type="'+z+'" name="answer[]" value="'+x+'" />Correct Answer<button class="delete btn btn-danger ml-3">Delete</button></div>'); //add input box
+                    $(wrapper).append('<div class=""><input type="text" name="mytext[]" class="form-control mb-1" placeholder="Fill me"/><input class="mb-5" type="'+z+'" name="answer[]" value="'+x+'" />Correct Answer<button class="delete btn btn-danger ml-3">Delete</button></div>'); //add input box
                     
                 } else {
                     alert('You Reached the limits')
@@ -109,12 +109,12 @@
         $(sin_ans).click(function(e) {
             e.preventDefault();
             z = "radio"
-            $(wrapper).prepend('<div class=""><input type="text" name="mytext[]" class="form-control mb-1" placeholder="Fill me"/><input class="mb-5" type="'+z+'" name="answer[]" value="'+x+'" />Correct Answer</div>');
+            $(wrapper).append('<div class=""><input type="text" name="mytext[]" class="form-control mb-1" placeholder="Fill me"/><input class="mb-5" type="'+z+'" name="answer[]" value="'+x+'" />Correct Answer</div>');
             $(add_button).click(function(e) {
                 e.preventDefault();
                 if (x < max_fields) {
                     x++;
-                    $(wrapper).prepend('<div class=""><input type="text" name="mytext[]" class="form-control mb-1" placeholder="Fill me"/><input class="mb-5" type="'+z+'" name="answer[]" value="'+x+'" />Correct Answer<button class="delete btn btn-danger ml-3">Delete</button></div>'); //add input box
+                    $(wrapper).append('<div class=""><input type="text" name="mytext[]" class="form-control mb-1" placeholder="Fill me"/><input class="mb-5" type="'+z+'" name="answer[]" value="'+x+'" />Correct Answer<button class="delete btn btn-danger ml-3">Delete</button></div>'); //add input box
                     
                 } else {
                     alert('You Reached the limits')
