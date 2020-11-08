@@ -3,25 +3,21 @@ body {
     background: linear-gradient(to right, white 50%, black 50%);
 }
 
-.main{
-    padding-left: 35%; 
-}
+    .main{
+        margin-left: 35%; 
+    }
 
-.login-form{
-    margin-top: 60%;
-}
+    .login-form{
+        margin-top: 60%;
+    }
+
+/* @media screen and (max-width: 450px) {
+    .login-form{
+        margin-top: 40%;
+    }
+} */
 
 .btn-black{
     background-color: #000 !important;
     color: #fff;
-}
-
-@media screen and (max-width: 750px) {
-    .login-form{
-        margin-top: 10%;
-    }
-    .main{
-        padding-left: 0%; 
-    }
-    
 }

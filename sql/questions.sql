@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 4.9.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Nov 07, 2020 at 01:39 PM
--- Server version: 10.4.14-MariaDB
--- PHP Version: 7.4.10
+-- Host: 127.0.0.1
+-- Generation Time: Nov 07, 2020 at 05:53 PM
+-- Server version: 10.4.8-MariaDB
+-- PHP Version: 7.2.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -18,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `examtool`
+-- Database: `webdev`
 --
 
 -- --------------------------------------------------------
@@ -28,31 +29,32 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `questions` (
-  `number` int(11) NOT NULL,
-  `sub_code` varchar(20) NOT NULL,
-  `description` varchar(300) NOT NULL,
-  `option1` varchar(200) NOT NULL,
-  `option2` varchar(200) NOT NULL,
-  `option3` varchar(200) NOT NULL,
-  `option4` varchar(200) NOT NULL,
-  `option5` varchar(200) NOT NULL,
-  `option6` varchar(200) NOT NULL,
-  `option7` varchar(200) NOT NULL,
-  `answer` varchar(100) NOT NULL,
-  `type` varchar(100) DEFAULT NULL
+  `number` int(2) NOT NULL,
+  `subject_id` varchar(10) NOT NULL,
+  `test_num` int(11) NOT NULL,
+  `description` varchar(200) DEFAULT NULL,
+  `option1` varchar(100) DEFAULT NULL,
+  `option2` varchar(100) DEFAULT NULL,
+  `option3` varchar(100) DEFAULT NULL,
+  `option4` varchar(100) DEFAULT NULL,
+  `option5` varchar(100) DEFAULT NULL,
+  `option6` varchar(100) DEFAULT NULL,
+  `option7` varchar(100) DEFAULT NULL,
+  `answer` varchar(20) DEFAULT NULL,
+  `type` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `questions`
 --
 
-INSERT INTO `questions` (`number`, `sub_code`, `description`, `option1`, `option2`, `option3`, `option4`, `option5`, `option6`, `option7`, `answer`, `type`) VALUES
-(39, '0', 'how?', 'e', 'w', 'q', '', '', '', '', ',w,e,e', NULL),
-(40, '0', 'how?', 'e', 'w', 'q', '', '', '', '', ',w,e,e', NULL),
-(41, '0', 'how?', 'c', 'b', 'a', '', '', '', '', ',a,b,c', NULL),
-(42, '0', 'how?', 'c', 'b', 'a', '', '', '', '', ',a,b', ''),
-(43, '0', 'how?', 'n', 'b', 'a', '', '', '', '', ',a,b', ''),
-(44, '0', 'how?', 'n', 'b', 'a', '', '', '', '', ',a,b', 'checkbox');
+INSERT INTO `questions` (`number`, `subject_id`, `test_num`, `description`, `option1`, `option2`, `option3`, `option4`, `option5`, `option6`, `option7`, `answer`, `type`) VALUES
+(1, '17cs71', 1, 'abcd', 'a', 'b', 'c', '', '', '', '', ',b', 'radio'),
+(1, '17cs71', 2, 'alksdsfjisjd', 'a', 'b', 'c', 'd', '', '', '', ',b', 'radio'),
+(2, '17cs71', 1, 'csldfjjf', 'a', 'b', 'c', '', '', '', '', ',c', 'radio'),
+(2, '17cs71', 2, 'djlsdsd', 'a', 'b', 'c', 'd', '', '', '', ',b,d', 'checkbox'),
+(3, '17cs71', 1, 'dljfdsofidjsiofdjsoifs', 'a', 'b', 'c', 'd', 'e', 'f', '', ',d', 'radio'),
+(4, '17cs71', 1, 'qwerty', 'a', 'b', 'c', 'd', '', '', '', ',b,c,d', 'checkbox');
 
 --
 -- Indexes for dumped tables
@@ -62,17 +64,18 @@ INSERT INTO `questions` (`number`, `sub_code`, `description`, `option1`, `option
 -- Indexes for table `questions`
 --
 ALTER TABLE `questions`
-  ADD PRIMARY KEY (`number`);
+  ADD PRIMARY KEY (`number`,`subject_id`,`test_num`),
+  ADD KEY `subject_id` (`subject_id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- Constraints for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `questions`
+-- Constraints for table `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `number` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  ADD CONSTRAINT `questions_ibfk_1` FOREIGN KEY (`subject_id`) REFERENCES `subjects` (`subject_id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

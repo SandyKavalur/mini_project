@@ -1,5 +1,14 @@
 <?php
     session_start();
+    
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+    if($_SESSION['temp'] == TRUE){
+        $_SESSION['temp'] = TRUE;
+    }else{
+        $_SESSION['temp'] = FALSE;
+    }
 ?>
 <html>
 <head>
@@ -31,7 +40,7 @@
                <?php
                   if($_SESSION['temp']){echo'
                      <li class="nav-item active pl-1">
-                        <a class="nav-link" href="#"><i class="fa fa-user fa-fw mr-1"></i>'.$_SESSION['username'].'</a>
+                        <a class="nav-link" href="#"><i class="fa fa-user fa-fw mr-1"></i>'.$_SESSION['name'].'</a>
                      </li>';}?>
                   <li class="nav-item pl-1">
                      <a class="nav-link" href="./reviewf/review.php"><i class="fa fa-th-list fa-fw mr-1"></i>Review</a>
@@ -61,25 +70,22 @@
 
     <div  class="h-100 w-100 mybg d-flex justify-content-center">
         <div class="description col-md-4 ">
-            <h1 class="text-info">    Welcome To Project Ideas
-                <p class="pt-3"> All project ideas stored in one place, select a language and find all the interesting projects or upload your own project to help others.
+            <h1 class="text-info">    Welcome To Online Examination Tool
+                <p class="pt-3"> It is also needed less manpower to execute the examination. Almost all organizations now-a-days, 
+                    are conducting their objective exams by online examination system, it saves students time in examinations.
                 </p>   
-                <a class="btn btn-outline-secondary btn-lg viewbtn" href="./signup.php">Get Started</a>  
+                <a class="btn btn-outline-secondary btn-lg viewbtn" href="./login.php">Get Started</a>  
             </h1>  
         </div>
     </div>
     <div class="container-fluid my-5 overflow-auto"  style='padding-top: 120px; padding-bottom: 120px;'>
         <div class="row">
             <div class=" pt-5 roundBorder col-md-6 overflow-hidden" id="aboutus">
-                <hr class=""/>
-                <h1 class="p-5 text-info">About Us:</h1>
-                <p class="pt-2 pb-5 px-5">Tired of searching all websites for projects? No more, search for any project of any language in a single place.</p>
-                <br />
+                <hr class="mt-5 pt-5"/>
+                <h1 class="p-5 text-info">Features</h1>
                 <ul class="ml-3 mb-5">
-                    <h2 class="text-info">Achieve your goals with 'Project Ideas'</h2>
-                    <li class="my-3">Projects of all languages</li>
-                    <li class="my-3">Link to the written code</li>
-                    <li class="my-3">Add your own projects</li>
+                    <li class="my-3">As a result of this, organizations are releasing results in less time. It also helps the environment by saving paper.</li>
+                    <li class="my-3">Organizations can also easily check the performance of the student that they give in an examination.</li>
                 </ul>
                 <hr class="mt-5"/>
             </div>
@@ -92,16 +98,15 @@
     <div class="container  overflow-auto" id="features" style='padding-top: 120px; padding-bottom: 120px;'>
          <div class="row">
             <div class=" text-justify p-5">
-                <h1 class="text-info text-center mb-4">Develop a new project from the old project</h1>
-                <p >We, here at ProjectIdeas, believe in a practical approach as theoretical knowledge alone won’t be of help in a real-time work environment.
-                    New Ideas pop out unexpectedly, while searching for a project you may get a new idea based on other existing projects or may even combine several
-                    projects. you can get the code of the project and add new features.
+                <h1 class="text-info text-center mb-4">What is an Online Examination System?</h1>
+                <p >In an online examination system examine get their user id and password with his/her admit card.
+
+                    This id is already saved in the examination server. When examine login to the server he/she get his/her profile already register.
                 </p>
                 <br />
                 <ul class="ml-n3 ">
-                    <li class="my-3">Search for a project</li>
-                    <li class="my-3">Get the code</li>
-                    <li class="my-3">Implement or add your ideas and features </li>
+                    <li class="my-3">All answers given by examine are saved into the server with his/her profile information.</li>
+                    <li class="my-3">checking the answer easy and error free as computers are more accurate than man and provide fast results too.</li>
                 </ul>
             </div>
         </div>
@@ -110,14 +115,18 @@
     <div class="container mb-5 mt-5 overflow-auto" style='padding-top: 120px; padding-bottom: 120px;'>
          <div class="row">
             <div class="col-md-6 overflow-hidden">
-               <img src="bg2.jpg" alt="Mike" class="myimg">
+               <img src="bg3.jpg" alt="Mike" class="myimg mt-5">
             </div>
             <div class="col-md-6 text-justify p-5">
-               <h1 class=" text-left mb-4">Get a certificate</h1>
-               <p class="">Choose from a wide variety of online courses with certificates of completion. Get your programming certifications, as well as 
-                  game and web development, data science, machine learning, and other digital skills certificates right here at Learn Academy.</p>
+               <h1 class=" text-left mb-4">Project objective:</h1>
+               <p class="">Online examination system is a non removable examination pattern of today’s life.
+
+                    We need more time saving and more accurate examination system as the number of applicants is increasing day by day.
+
+                    For all IT students and professionals, it is very important to have some basic understanding about the online examination system.
+</p>
                <br />
-               <div class="pt-2 pb-3"> <a class="py-2 btn btn-dark px-4" href="./signup.php">Join Now</a> </div>
+               <div class="pt-2 pb-3"> <a class="py-2 btn btn-dark px-4" href="./login.php">Start Now</a> </div>
             </div>
         </div>
     </div>
@@ -168,7 +177,7 @@
                             echo'\'Please LogIn!\'';
                         }else{
                             echo'
-                                \'Dear '.$_SESSION['username'].', Thanks for choosing Learn Academy. \nWe will contact you through your mail - '.$_SESSION['email'].'\'
+                                \'Dear '.$_SESSION['name'].', Thanks for choosing Learn Academy. \nWe will contact you through your mail - '.$_SESSION['email'].'\'
                             ';
                         }echo')">Send »</a>';?>
                 </div>
