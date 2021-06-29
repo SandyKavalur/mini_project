@@ -7,6 +7,9 @@
     $_SESSION['code']=$_POST['code'];
     $code = $_POST['code'];
 
+    $query="insert into test_time values ('$_POST[tnum]','$_POST[code]','$_POST[date]','$_POST[time]','$_POST[duration]');";
+    $database->query($query);
+
     $query = "select * from subjects where subject_id='$code'";
     $subject = $database->query($query);
     

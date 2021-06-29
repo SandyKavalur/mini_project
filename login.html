@@ -9,22 +9,22 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
-    <link href="login.css" rel="stylesheet">
+    <link href="./login.css" rel="stylesheet" type="text/css">
+    
 </head>
-<body>
+<body class="" >
     <div class="main ">
-        <div class="col-md-6 col-sm-12">
+        <div class="col-md-8 col-sm-8">
         <div class="login-form">
+            <h1 class="">LOGIN</h1>
             <form action="login.php" method="POST"> 
                 <div class="form-group">
-                    <label>User Name</label>
-                    <input type="text" class="form-control" placeholder="User Name" name='uname'>
+                    <input type="text" class="form-control" placeholder="User Name" name='uname' autofocus>
                 </div>
                 <div class="form-group">
-                    <label>Password</label>
                     <input type="password" class="form-control" placeholder="Password" name="password">
                 </div>
-                <button type="submit" class="btn btn-black">Login</button>
+                <button type="submit" class="btn btn-dark">Login</button>
                 
             </form>
         </div>

@@ -29,8 +29,8 @@
             $num=$x;
             $ans="";      
             foreach($_POST[$x] as $selected){
-                $ans=$ans.",".$selected;
-                
+                echo $selected;
+                $ans=$ans.",".$selected;                
             }
             
             if($insert->execute()){

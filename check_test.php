@@ -17,53 +17,154 @@
         h1,h2{
             text-align: center;
         }
+        h4{
+            display: inline;
+        }
+        button{
+            margin-left: 50px;
+            margin-top: 25px;   
+        }
+        body{
+            text-align:center;
+            margin-top: 150px;
+        }
+        .inpu{
+            margin-left: -100px; 
+        }
     </style>
 </head>
-<body class='bg-secondary'>
-    <div class="container">
+<body class='bg-secondary container'>
+    
     <?php
         require_once "connection.php";
+
         $code=$_GET['code'];
-        $usn=$_SESSION['name'];
+        $usn=$_SESSION['usn'];
 
         $_SESSION['subject_code']=$_GET['code'];
-        $query="select max(test) as num from enrolled where usn='$usn' and subject_id='$code'";
+
+        date_default_timezone_set('Asia/Kolkata');
+        $date=date("H:i:s");
+
+        $query="select max(test_num) as num from questions where subject_id='$code'";
         $num=$database->query($query);
         $ans=$num->fetch_assoc();
-        $_SESSION['test_num']=$ans['num']+1;
+        $_SESSION['test_num']=$ans['num'];
         $test_num=$_SESSION['test_num'];
-        
-        $query="select * from questions where subject_id='$code' and test_num='$test_num';";
-        
-        $tests=$database->query($query);
 
-        if ($tests->num_rows > 0){
-            echo "<h1 class='mt-5'>Questions</h1>";
-            echo "<form class='mb-5' action='submit_answers.php' method='post'";
-                echo "<div class='mt-5'>";
-                    while($row = $tests->fetch_assoc()){
-                        echo "<p>";
-                        
-                            echo "<b>".$row['number'].".".$row['description']."</b><br>";
-                            for($i=1;$i<8;$i++){
-                                if($row['option'.$i]!=null){
-                                    echo "<input class='mt-3 mr-3' type=".$row['type']." name=".$row['number']."[]"." value=".$row['option'.$i].">".$row['option'.$i]."<br>";
-                                }else{
-                                    break;
-                                }
+        $query="select max(test) as last_test from enrolled where usn='$usn' and subject_id='$code';";
+        $last_test=$database->query($query);
+        $last_test=$last_test->fetch_assoc();
+        
+        if($last_test['last_test']==$test_num ){
+            echo "<script> alert('No Test Available'); 
+                    window.location.href='./student.php';
+                </script>";
+        }else{
+
+            $datetime="select date,time,duration from test_time where test_number='$_SESSION[test_num]' and subject_code='$code';";
+            $res=$database->query($datetime);
+            $res=$res->fetch_assoc();
+             
+            $a=explode(":",$res['time']);
+            $b=explode(":",$date);
+        
+            if(($b[0]>=$a[0] and $b[1] -$a[1]>10) and $res['date']<=date("Y-m-d")){
+                echo "<script> alert('You are late, Test got over'); 
+                    window.location.href='./student.php';
+                </script>";
+            }else if(($b[0]<=$a[0] and $b[1]<$a[1]) and $res['date']>=date("Y-m-d")){
+                echo "<h1>Test starts on '$res[date]' at ".date('h:i:s a',strtotime($res['time'])) ."</h1>";
+                $date1 = strtotime($res['date']);
+                echo date('d',$date1)."-".date('M',$date1)."-".date('Y',$date1);
+                echo "<script type='text/javascript'>
+                        setInterval(function(){
+                            var d = new Date();
+                            var n = d.getMinutes();
+                            
+                            if($b[0]==$a[0] && n==$a[1] && ".$res['date']."==".date('Y-m-d')."){
+                                location.reload();
+                                clearInterval();
                             }
-                                                
-                        echo "<hr/></p>";
-                    }
-                    echo "<input id='submit' class='btn btn-dark' type=submit>";
-                echo "</div>";
-            echo "</form>";
+
+                        },1000)
+                    </script>";
+
             }
-        else{
-            echo "<h2> No test Available</h2>";
+            else if($a[0]==$b[0] and $res['date']==date("Y-m-d")){
+                if($b[1]-$a[1]<10 ){
+                    
+                    $query="select * from questions where subject_id='$code' and test_num='$test_num';";
+                    $tests=$database->query($query);
+                    // $_SESSION['duration']=$res['duration'].":00";
+
+                    if(!isset($_SESSION['duration'])){
+                        $_SESSION['duration']=$res['duration'].":00";
+                    }
+    
+                    if ($tests->num_rows > 0){
+                    ?>
+                        <h4>Time Remaining:</h4> <h4 id='time'></h4>
+                    <?php
+                        
+                        echo "<script type='text/javascript'>
+                                document.getElementById('time').innerHTML='$_SESSION[duration]';";echo"
+                                var arr=document.getElementById('time').innerHTML.split(':');
+                                var min=parseInt(arr[0]);
+                                var sec=0;
+                                
+                                setInterval(function(){
+                                    
+                                    if(min==0 && sec==0){
+                                        document.getElementById('submit').click();
+                                    }
+                                    if (sec>0){
+                                        sec--;
+                                        document.getElementById('time').innerHTML=min+':'+sec;                                       
+                                        
+                                    }
+                                
+                                    else{
+                                        min--;
+                                        sec=59;
+                                        document.getElementById('time').innerHTML=min+':'+sec;                                                                               
+                                       
+                                    }
+                                },1000);
+                            </script>";    
+                            
+                            // $_SESSION['duration'] = "<script>document.write(document.getElementById('time').innerHTML)</script>";
+
+                        echo "<h1>Questions</h1>";
+                        echo "<form action='submit_answers.php' method='post'";
+                            echo "<div>";
+                                while($row = $tests->fetch_assoc()){
+                                    echo "<p>";
+                                        echo "<b class='inpu'>".$row['number'].".".$row['description']."</b><br>";
+                                        for($i=1;$i<8;$i++){
+                                            if($row['option'.$i]!=null){
+                                                echo "<input class='inpu' type=".$row['type']." name=".$row['number']."[]"." value='".$row['option'.$i]."'>".$row['option'.$i]."<br>";
+                                            }else{
+                                                break;
+                                            }
+                                        }                   
+                                    echo "</p>";
+                                }
+                                echo "<span class='inpu'><input id='submit' class='btn btn-dark ml-5' type=submit></span>";
+                            echo "</div>";
+                        echo "</form>";
+                        }else{
+                            echo "<h2> No test Available</h2>";
+                        }
+                }else{
+                    echo "test expired";
+                }
+            }else{
+                echo "<script> alert('You are late, Test got over'); 
+                    window.location.href='./student.php';
+                </script>";
+            }
         }
-            
     ?>
-    </div>
 </body>
 </html>

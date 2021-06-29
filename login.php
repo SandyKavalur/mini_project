@@ -31,17 +31,20 @@
         $result=$database->query($check);
         $info=$result->fetch_assoc();
         $_SESSION["name"]=$info['name'];
-        
+        $_SESSION['usn']=$uname;
         if($result->num_rows>0)
         {
             $_SESSION['temp']=true;
             if($info['role']=='student'){
                 //echo $_SESSION['name'];
                 $_SESSION['name']=$info['name'];
-                header("Location: ./student.php?usn=".$info['id']);
+                header("Location: ./student.php");
             }
             else if($info['role']=='teacher'){
                 header("Location: ./test.html");
+            }
+            else if($info['role']=='admin'){
+                header('Location: ./admin.html');
             }
             
         }

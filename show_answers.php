@@ -27,7 +27,7 @@
 
         echo "<h1 class='mt-5'>Answers</h1><hr >";
         while($ans=$answer->fetch_assoc()){
-    
+            
             echo "<p class='mb-5'>
                     <h4 class='mb-3'>".$ans['number'].".".$ans['description']."</h4>
                     CORRECT ANSWER: <h5 class='ml-3'>".$ans['answer']."</h5>

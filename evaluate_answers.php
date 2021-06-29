@@ -26,7 +26,7 @@
 
     $query="insert into enrolled values('$usn','$subject_code','$test_num','$marks');";
     if($database->query($query)){
-        header("Location: ./student.php?usn=".$_SESSION['usn']);
+        header("Location: ./student.php");
     }else{
         echo $database->error;
     }

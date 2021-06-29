@@ -1,5 +1,5 @@
 <?php
-    include "./dbconn.php";
+    include "connection.php";
 
     if (isset($_POST['submit'])){
         $uname = $_POST['uname'];
@@ -8,16 +8,16 @@
         $email = $_POST['email'];
 
         $sql_u = "SELECT * FROM login WHERE user_name='$uname'";
-        $res_u = mysqli_query($connect, $sql_u);
+        $res_u = $database->query($sql_u);
 
-        if (mysqli_num_rows($res_u) > 0){
+        if ($res_u->num_rows > 0){
             echo "<script>
                 alert('Sorry... username already taken');
                 window.location.href = 'signup.php'
             </script>";
         }else{
             $query = "INSERT INTO login(user_name, password, email) VALUES ('$uname', '$pass', '$email')";  
-            $result = mysqli_query($connect, $query);  
+            $result = $database->query($query);  
 
             if($result)
             {
